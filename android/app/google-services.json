@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "898512056084",
+    "project_id": "nike-shoes-ecommerce-app",
+    "storage_bucket": "nike-shoes-ecommerce-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:898512056084:android:7679b06830fb3278119c01",
+        "android_client_info": {
+          "package_name": "com.example.nike_shoes_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDv7mA3wgfPb73LAzDJkrjJ8ePV5b7aSDI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
