@@ -7,6 +7,7 @@ import 'package:nike_shoes_app/utilities/utilis.dart';
 import 'package:nike_shoes_app/view/home_screen.dart';
 import 'package:nike_shoes_app/view/sign_up_screen.dart';
 import 'package:nike_shoes_app/view_model/auth_view_model.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -30,7 +31,7 @@ class _HomeScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final authRepo = AuthViewModel();
+    final authProvider = Provider.of<AuthViewModel>(context);
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -148,7 +149,7 @@ class _HomeScreenState extends State<LoginScreen> {
                                 if (_formKey.currentState!.validate()) {
                                   try {
                                     final UserCredential credential =
-                                        await authRepo.login(
+                                        await authProvider.login(
                                           _emailController.text.trim(),
                                           _passwordController.text.trim(),
                                         );
@@ -180,7 +181,11 @@ class _HomeScreenState extends State<LoginScreen> {
                                   }
                                 }
                               },
-                              child: const Text('Login'),
+                              child: authProvider.isLoading
+                                  ? const CircularProgressIndicator(
+                                      color: AppColors.white,
+                                    )
+                                  : const Text('Login'),
                             ),
                           ],
                         ),

@@ -1,8 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:nike_shoes_app/repository/Exceptions/auth_exceptions.dart';
 
 class AuthRepository {
   final auth = FirebaseAuth.instance;
+  final CollectionReference users = FirebaseFirestore.instance.collection(
+    'users',
+  );
 
   Future<UserCredential> loginUserWithEmailAndPassword(
     String email,
@@ -13,6 +17,7 @@ class AuthRepository {
         email: email,
         password: password,
       );
+
       return credentials;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
@@ -28,12 +33,18 @@ class AuthRepository {
   Future<UserCredential> signUpWithEmailAndPassword(
     String email,
     String password,
+    String name,
   ) async {
     try {
       final credentials = await auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+      await users.doc(credentials.user!.uid).set({
+        'name': name,
+        'email': email,
+        'role': 'user',
+      });
       return credentials;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
@@ -56,5 +67,9 @@ class AuthRepository {
         );
       }
     }
+  }
+
+  Future<void> logoutUser() async {
+    await auth.signOut();
   }
 }

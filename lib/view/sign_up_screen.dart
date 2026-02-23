@@ -7,6 +7,7 @@ import 'package:nike_shoes_app/utilities/utilis.dart';
 import 'package:nike_shoes_app/view/home_screen.dart';
 import 'package:nike_shoes_app/view/login_screen.dart';
 import 'package:nike_shoes_app/view_model/auth_view_model.dart';
+import 'package:provider/provider.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -18,6 +19,7 @@ class SignupScreen extends StatefulWidget {
 class _HomeScreenState extends State<SignupScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -34,7 +36,7 @@ class _HomeScreenState extends State<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final AuthViewModel authRepo = AuthViewModel();
+    final authProvider = Provider.of<AuthViewModel>(context);
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -65,6 +67,22 @@ class _HomeScreenState extends State<SignupScreen> {
                             ),
                             const SizedBox(height: 24),
                             CustomInputField(
+                              controller: _nameController,
+                              hintText: 'Name',
+                              prefixIcon: Icon(
+                                Icons.person,
+                                color: AppColors.primary,
+                              ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "Name is required";
+                                } else {
+                                  return null;
+                                }
+                              },
+                            ),
+                            const SizedBox(height: 24),
+                            CustomInputField(
                               controller: _emailController,
                               hintText: 'Email',
                               prefixIcon: Icon(
@@ -81,7 +99,9 @@ class _HomeScreenState extends State<SignupScreen> {
                                 }
                               },
                             ),
+
                             const SizedBox(height: 24),
+
                             TextFormField(
                               obscureText: isObscure,
                               controller: _passwordController,
@@ -203,9 +223,10 @@ class _HomeScreenState extends State<SignupScreen> {
                                 if (_formKey.currentState!.validate()) {
                                   try {
                                     final UserCredential credential =
-                                        await authRepo.createUser(
+                                        await authProvider.createUser(
                                           _emailController.text.trim(),
                                           _passwordController.text.trim(),
+                                          _nameController.text.trim(),
                                         );
                                     if (credential.user != null) {
                                       Utilis.showMessage(
@@ -233,7 +254,13 @@ class _HomeScreenState extends State<SignupScreen> {
                                   }
                                 }
                               },
-                              child: const Text('Sign up'),
+                              child: authProvider.isLoading
+                                  ? const Center(
+                                      child: CircularProgressIndicator(
+                                        color: AppColors.white,
+                                      ),
+                                    )
+                                  : const Text('Sign up'),
                             ),
                           ],
                         ),
