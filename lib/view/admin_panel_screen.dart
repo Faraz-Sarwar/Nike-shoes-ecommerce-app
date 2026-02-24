@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:nike_shoes_app/view/add_product.dart';
 
 class AdminPanelScreen extends StatefulWidget {
   const AdminPanelScreen({super.key});
@@ -13,10 +14,18 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Admin Panel'),
+        title: const Text('Admin Panel'),
         centerTitle: true,
         actions: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.add, size: 34)),
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                CupertinoPageRoute(builder: (_) => AddProduct()),
+              );
+            },
+            icon: Icon(Icons.add, size: 34),
+          ),
         ],
       ),
       body: Padding(

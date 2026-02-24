@@ -5,7 +5,7 @@ class Product {
   final double price;
   final double ratings;
   final int reviewsCount;
-  final String imageName;
+  final String imagePath;
   final String category;
 
   Product({
@@ -15,7 +15,7 @@ class Product {
     required this.price,
     required this.ratings,
     required this.reviewsCount,
-    required this.imageName,
+    required this.imagePath,
     required this.category,
   });
 
@@ -28,7 +28,7 @@ class Product {
       price: (data['price'] ?? 0).toDouble(),
       ratings: (data['ratings'] ?? 0).toDouble(),
       reviewsCount: (data['reviewsCount'] ?? 0),
-      imageName: data['imageName'] ?? 'default.png',
+      imagePath: data['imageName'] ?? 'default.png',
       category: data['category'] ?? '',
     );
   }
@@ -41,7 +41,7 @@ class Product {
       'price': price,
       'ratings': ratings,
       'reviewsCount': reviewsCount,
-      'imageName': imageName,
+      'imagePath': imagePath,
       'category': category,
     };
   }

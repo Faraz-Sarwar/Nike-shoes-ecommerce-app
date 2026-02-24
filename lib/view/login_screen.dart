@@ -143,7 +143,7 @@ class _HomeScreenState extends State<LoginScreen> {
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8),
                                 ),
-                                minimumSize: Size(160, 46),
+                                minimumSize: Size(double.infinity, 46),
                               ),
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {

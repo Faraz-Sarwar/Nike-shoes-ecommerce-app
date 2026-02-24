@@ -6,6 +6,7 @@ class CustomInputField extends StatelessWidget {
   final TextEditingController controller;
   final Widget prefixIcon;
   final Widget? suffixIcon;
+  final TextInputType? inputKeyboardType;
   final String? Function(String?)? validator;
 
   const CustomInputField({
@@ -14,6 +15,7 @@ class CustomInputField extends StatelessWidget {
     required this.hintText,
     required this.prefixIcon,
     this.suffixIcon,
+    this.inputKeyboardType,
     this.validator,
   });
 
@@ -21,6 +23,7 @@ class CustomInputField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
+      keyboardType: inputKeyboardType,
       validator: validator,
       decoration: InputDecoration(
         prefixIcon: prefixIcon,

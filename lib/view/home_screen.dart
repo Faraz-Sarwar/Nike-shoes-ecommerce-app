@@ -21,41 +21,59 @@ class _HomeScreenState extends State<HomeScreen> {
   final AuthViewModel authRepo = AuthViewModel();
   final UserViewModel userModel = UserViewModel();
 
-  //will be used to display name in drawer
-  Widget getUserName() {
+  //resuable function to extract user data
+  Widget getUserData(String userData) {
     return FutureBuilder(
       future: userModel.getUserData(),
       builder: (context, AsyncSnapshot<Map<String, dynamic>?> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
+          return Text('loading...');
         }
         if (!snapshot.hasData || snapshot.data == null) {
           return const Text('User');
         } else {
-          final String username = snapshot.data!['name'];
-          return Text(username);
+          final data = snapshot.data;
+          return Text(data![userData]);
         }
       },
     );
   }
 
-  //will be used to display email in drawer
-  Widget getUserEmail() {
-    return FutureBuilder(
-      future: userModel.getUserData(),
-      builder: (context, AsyncSnapshot<Map<String, dynamic>?> snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
-        }
-        if (!snapshot.hasData || snapshot.data == null) {
-          return const Text('User');
-        } else {
-          final String userEmail = snapshot.data!['email'];
-          return Text(userEmail);
-        }
-      },
-    );
-  }
+  //will be used to display name in drawer
+  // Widget getUserName() {
+  //   return FutureBuilder(
+  //     future: userModel.getUserData(),
+  //     builder: (context, AsyncSnapshot<Map<String, dynamic>?> snapshot) {
+  //       if (snapshot.connectionState == ConnectionState.waiting) {
+  //         return CircularProgressIndicator();
+  //       }
+  //       if (!snapshot.hasData || snapshot.data == null) {
+  //         return const Text('User');
+  //       } else {
+  //         final String username = snapshot.data!['name'];
+  //         return Text(username);
+  //       }
+  //     },
+  //   );
+  // }
+
+  // //will be used to display email in drawer
+  // Widget getUserEmail() {
+  //   return FutureBuilder(
+  //     future: userModel.getUserData(),
+  //     builder: (context, AsyncSnapshot<Map<String, dynamic>?> snapshot) {
+  //       if (snapshot.connectionState == ConnectionState.waiting) {
+  //         return CircularProgressIndicator();
+  //       }
+  //       if (!snapshot.hasData || snapshot.data == null) {
+  //         return const Text('User');
+  //       } else {
+  //         final String userEmail = snapshot.data!['email'];
+  //         return Text(userEmail);
+  //       }
+  //     },
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -67,8 +85,8 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             UserAccountsDrawerHeader(
               //using reusable widgets
-              accountName: getUserName(),
-              accountEmail: getUserEmail(),
+              accountName: getUserData('name'),
+              accountEmail: getUserData('email'),
               currentAccountPicture: CircleAvatar(
                 backgroundImage: const AssetImage('assets/images/profile.png'),
               ),
@@ -179,11 +197,11 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(height: 32),
             SizedBox(
               height: 64,
+              //search products by category section
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: categories.length,
                 itemBuilder: (context, index) {
-                  final catergory = categories[index];
                   return Container(
                     margin: EdgeInsets.only(right: 12),
                     width: 170,
