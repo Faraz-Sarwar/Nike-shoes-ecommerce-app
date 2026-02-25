@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
+import 'package:nike_shoes_app/model/product.dart';
 import 'package:nike_shoes_app/repository/products_repository.dart';
 
 class ProductsViewModel extends ChangeNotifier {
@@ -9,11 +10,15 @@ class ProductsViewModel extends ChangeNotifier {
 
   bool get isLoading => _isLoading;
 
-  Stream<List<Map<String, dynamic>>> getProducts() {
+  set isLoading(bool value) {
+    _isLoading = value;
+  }
+
+  Stream<List<Product>> getProducts() {
     try {
       _isLoading = true;
       notifyListeners();
-      final products = productRepo.getAllProducts();
+      final Stream<List<Product>> products = productRepo.getAllProducts();
       _isLoading = false;
       notifyListeners();
       return products;
@@ -22,28 +27,15 @@ class ProductsViewModel extends ChangeNotifier {
     }
   }
 
-  Future<DocumentReference> addProducts(
-    String name,
-    String description,
-    double price,
-    String category,
-    double ratings,
-    int noOfReviews,
-    String imagePath,
-  ) async {
+  Future<DocumentReference> addProducts(Product product) async {
     _isLoading = true;
     notifyListeners();
-    final doc = await productRepo.addProduct(
-      name,
-      description,
-      price,
-      category,
-      ratings,
-      noOfReviews,
-      imagePath,
-    );
+
+    final doc = await productRepo.addProduct(product);
+
     _isLoading = false;
     notifyListeners();
+
     return doc;
   }
 }

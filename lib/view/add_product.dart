@@ -1,7 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nike_shoes_app/components/custom_input_field.dart';
+import 'package:nike_shoes_app/model/product.dart';
 import 'package:nike_shoes_app/utilities/app_colors.dart';
 import 'package:nike_shoes_app/utilities/utilis.dart';
+import 'package:nike_shoes_app/view/admin_panel_screen.dart';
 import 'package:nike_shoes_app/view_model/products_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -38,7 +41,13 @@ class _AddProductState extends State<AddProduct> {
   Widget build(BuildContext context) {
     final productVM = context.read<ProductsViewModel>();
     return Scaffold(
-      appBar: AppBar(title: const Text('Add a product'), centerTitle: true),
+      backgroundColor: AppColors.background,
+      appBar: AppBar(
+        title: const Text('Add a product'),
+        centerTitle: true,
+        backgroundColor: AppColors.background,
+        surfaceTintColor: AppColors.background,
+      ),
       body: Form(
         key: _formKey,
         child: Padding(
@@ -160,22 +169,38 @@ class _AddProductState extends State<AddProduct> {
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
                       try {
-                        final doc = await productVM.addProducts(
-                          nameController.text.trim(),
-                          descriptionController.text.trim(),
-                          double.parse(priceController.text),
-                          categoryController.text,
-                          double.parse(ratingsController.text),
-                          int.parse(reviewsCountController.text),
-                          imageNameController.text,
+                        final product = Product(
+                          id: '',
+                          name: nameController.text,
+                          description: descriptionController.text,
+                          price: double.parse(priceController.text),
+                          ratings: double.parse(ratingsController.text),
+                          reviewsCount: int.parse(reviewsCountController.text),
+                          imagePath: imageNameController.text,
+                          category: categoryController.text,
                         );
+                        final doc = await productVM.addProducts(product);
                         if (doc.id.isNotEmpty) {
                           Utilis.showMessage(
                             'Product added successfully',
                             Colors.green,
                           );
+                          nameController.clear();
+                          descriptionController.clear();
+                          priceController.clear();
+                          ratingsController.clear();
+                          reviewsCountController.clear();
+                          imageNameController.clear();
+                          categoryController.clear();
+                          // Navigator.push(
+                          //   context,
+                          //   CupertinoPageRoute(
+                          //     builder: (_) => AdminPanelScreen(),
+                          //   ),
+                          // );
                         }
                       } catch (e) {
+                        print('error adding a product $e');
                         Utilis.showMessage(e.toString(), Colors.red);
                       }
                     }

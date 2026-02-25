@@ -39,46 +39,10 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  //will be used to display name in drawer
-  // Widget getUserName() {
-  //   return FutureBuilder(
-  //     future: userModel.getUserData(),
-  //     builder: (context, AsyncSnapshot<Map<String, dynamic>?> snapshot) {
-  //       if (snapshot.connectionState == ConnectionState.waiting) {
-  //         return CircularProgressIndicator();
-  //       }
-  //       if (!snapshot.hasData || snapshot.data == null) {
-  //         return const Text('User');
-  //       } else {
-  //         final String username = snapshot.data!['name'];
-  //         return Text(username);
-  //       }
-  //     },
-  //   );
-  // }
-
-  // //will be used to display email in drawer
-  // Widget getUserEmail() {
-  //   return FutureBuilder(
-  //     future: userModel.getUserData(),
-  //     builder: (context, AsyncSnapshot<Map<String, dynamic>?> snapshot) {
-  //       if (snapshot.connectionState == ConnectionState.waiting) {
-  //         return CircularProgressIndicator();
-  //       }
-  //       if (!snapshot.hasData || snapshot.data == null) {
-  //         return const Text('User');
-  //       } else {
-  //         final String userEmail = snapshot.data!['email'];
-  //         return Text(userEmail);
-  //       }
-  //     },
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 244, 243, 243),
+      backgroundColor: AppColors.background,
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
@@ -136,6 +100,8 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       appBar: AppBar(
+        backgroundColor: AppColors.background,
+        surfaceTintColor: AppColors.background,
         actions: [
           IconButton(onPressed: () {}, icon: Icon(Icons.search, size: 28)),
         ],
