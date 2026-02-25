@@ -1,11 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nike_shoes_app/repository/Exceptions/auth_exceptions.dart';
 import 'package:nike_shoes_app/repository/auth_repository.dart';
-import 'package:nike_shoes_app/utilities/utilis.dart';
-import 'package:nike_shoes_app/view/admin_panel_screen.dart';
 
 class AuthViewModel extends ChangeNotifier {
   final AuthRepository authRepo = AuthRepository();
