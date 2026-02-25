@@ -28,7 +28,7 @@ class Product {
       price: (data['price'] ?? 0).toDouble(),
       ratings: (data['ratings'] ?? 0).toDouble(),
       reviewsCount: (data['reviewsCount'] ?? 0),
-      imagePath: data['imageName'] ?? 'default.png',
+      imagePath: (data['imageName'] ?? 'default.png').toString().trim(),
       category: data['category'] ?? '',
     );
   }

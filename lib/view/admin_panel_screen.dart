@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:nike_shoes_app/data/product_images.dart';
 import 'package:nike_shoes_app/model/product.dart';
 import 'package:nike_shoes_app/utilities/app_colors.dart';
 import 'package:nike_shoes_app/view/add_product.dart';
@@ -76,10 +77,23 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
                     ),
                     itemBuilder: (context, int index) {
                       final Product product = snapshot.data![index];
+
                       return Container(
                         decoration: BoxDecoration(
                           color: AppColors.white,
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(24),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Image.asset(
+                                productImages[index],
+                                fit: BoxFit.cover,
+                              ),
+                            ],
+                          ),
                         ),
                       );
                     },

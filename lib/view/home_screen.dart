@@ -166,7 +166,7 @@ class _HomeScreenState extends State<HomeScreen> {
               //search products by category section
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: categories.length,
+
                 itemBuilder: (context, index) {
                   return Container(
                     margin: EdgeInsets.only(right: 12),
