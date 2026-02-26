@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:nike_shoes_app/data/categories.dart';
 import 'package:nike_shoes_app/data/product_images.dart';
 import 'package:nike_shoes_app/utilities/app_colors.dart';
 import 'package:nike_shoes_app/view_model/products_view_model.dart';

@@ -1,11 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nike_shoes_app/components/products_list_card.dart';
-import 'package:nike_shoes_app/data/product_images.dart';
-import 'package:nike_shoes_app/model/product.dart';
 import 'package:nike_shoes_app/utilities/app_colors.dart';
 import 'package:nike_shoes_app/view/add_product.dart';
-import 'package:nike_shoes_app/view_model/products_view_model.dart';
 
 class AdminPanelScreen extends StatefulWidget {
   const AdminPanelScreen({super.key});
@@ -17,7 +14,6 @@ class AdminPanelScreen extends StatefulWidget {
 class _AdminPanelScreenState extends State<AdminPanelScreen> {
   @override
   Widget build(BuildContext context) {
-    final ProductsViewModel productsVm = ProductsViewModel();
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(

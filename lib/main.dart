@@ -1,12 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:nike_shoes_app/utilities/app_colors.dart';
-import 'package:nike_shoes_app/view/add_product.dart';
-import 'package:nike_shoes_app/view/admin_panel_screen.dart';
 import 'package:nike_shoes_app/view/auth_wrapper.dart';
-import 'package:nike_shoes_app/view/home_screen.dart';
-import 'package:nike_shoes_app/view/login_screen.dart';
-import 'package:nike_shoes_app/view/sign_up_screen.dart';
 import 'package:nike_shoes_app/view_model/auth_view_model.dart';
 import 'package:nike_shoes_app/view_model/products_view_model.dart';
 import 'package:provider/provider.dart';
