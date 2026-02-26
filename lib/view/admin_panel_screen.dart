@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:nike_shoes_app/components/products_list_card.dart';
 import 'package:nike_shoes_app/data/product_images.dart';
 import 'package:nike_shoes_app/model/product.dart';
 import 'package:nike_shoes_app/utilities/app_colors.dart';
@@ -46,61 +47,7 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
             ),
             const SizedBox(height: 32),
-            StreamBuilder<List<Product>>(
-              stream: productsVm.getProducts(),
-              builder: (context, AsyncSnapshot<List<Product>> snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: CircularProgressIndicator(color: AppColors.primary),
-                  );
-                }
-                if (!snapshot.hasData) {
-                  return const Center(
-                    child: Text(
-                      'No products curretly available',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w400,
-                        color: AppColors.textPrimary,
-                      ),
-                    ),
-                  );
-                }
-                return Expanded(
-                  child: GridView.builder(
-                    itemCount: snapshot.data!.length,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisSpacing: 12,
-                      mainAxisSpacing: 12,
-                      childAspectRatio: 0.70,
-                      crossAxisCount: 2,
-                    ),
-                    itemBuilder: (context, int index) {
-                      final Product product = snapshot.data![index];
-
-                      return Container(
-                        decoration: BoxDecoration(
-                          color: AppColors.white,
-                          borderRadius: BorderRadius.circular(24),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Image.asset(
-                                productImages[index],
-                                fit: BoxFit.cover,
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                );
-              },
-            ),
+            const ProductsListCard(),
           ],
         ),
       ),

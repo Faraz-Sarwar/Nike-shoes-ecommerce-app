@@ -60,4 +60,16 @@ class ProductsRepository {
       throw Exception(e.toString());
     }
   }
+
+  Future<Set<String>> getAllCategories() async {
+    final snapshot = await FirebaseFirestore.instance
+        .collection('products')
+        .get();
+    final Set<String> categories = {};
+    for (var doc in snapshot.docs) {
+      final data = doc.data();
+      categories.add(data['category']);
+    }
+    return categories;
+  }
 }

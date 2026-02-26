@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:nike_shoes_app/model/category.dart';
+import 'package:nike_shoes_app/components/category_list.dart';
+import 'package:nike_shoes_app/components/products_list_card.dart';
 import 'package:nike_shoes_app/repository/user_data.dart';
 import 'package:nike_shoes_app/utilities/app_colors.dart';
 import 'package:nike_shoes_app/utilities/utilis.dart';
@@ -16,10 +17,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  /// Reusable widget to display current user's name
   final UserData userData = UserData();
   final AuthViewModel authRepo = AuthViewModel();
   final UserViewModel userModel = UserViewModel();
+
+  int categorySelectedIndex = 0;
 
   //resuable function to extract user data
   Widget getUserData(String userData) {
@@ -54,9 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
               currentAccountPicture: CircleAvatar(
                 backgroundImage: const AssetImage('assets/images/profile.png'),
               ),
-              decoration: BoxDecoration(
-                color: AppColors.primary, // your primary color
-              ),
+              decoration: BoxDecoration(color: AppColors.primary),
             ),
             ListTile(
               leading: const Icon(Icons.home),
@@ -87,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 //Autheticate if user is admin or NOT
                 final bool admin = await userModel.isAdmin();
                 if (admin) {
-                  Navigator.pushReplacement(
+                  Navigator.push(
                     context,
                     CupertinoPageRoute(builder: (_) => AdminPanelScreen()),
                   );
@@ -109,6 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Stack(
               children: [
@@ -162,23 +163,19 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 32),
             SizedBox(
-              height: 64,
+              height: 60,
               //search products by category section
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-
-                itemBuilder: (context, index) {
-                  return Container(
-                    margin: EdgeInsets.only(right: 12),
-                    width: 170,
-                    decoration: BoxDecoration(
-                      color: AppColors.white,
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                  );
-                },
-              ),
+              child: const CategoryList(),
             ),
+            const SizedBox(height: 32),
+            const Text(
+              "New Men's",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 24),
+
+            //Fetch all products from firebase
+            const ProductsListCard(),
           ],
         ),
       ),

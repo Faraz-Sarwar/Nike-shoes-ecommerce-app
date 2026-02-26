@@ -38,4 +38,9 @@ class ProductsViewModel extends ChangeNotifier {
 
     return doc;
   }
+
+  Future<Set<String>> getCategories() async {
+    final Set<String> categories = await productRepo.getAllCategories();
+    return categories;
+  }
 }
