@@ -1,12 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nike_shoes_app/components/category_list.dart';
-import 'package:nike_shoes_app/components/products_list_card.dart';
+import 'package:nike_shoes_app/data/product_images.dart';
+import 'package:nike_shoes_app/model/product.dart';
 import 'package:nike_shoes_app/repository/user_data.dart';
 import 'package:nike_shoes_app/utilities/app_colors.dart';
 import 'package:nike_shoes_app/utilities/utilis.dart';
 import 'package:nike_shoes_app/view/admin_panel_screen.dart';
+import 'package:nike_shoes_app/view/product_page.dart';
 import 'package:nike_shoes_app/view_model/auth_view_model.dart';
+import 'package:nike_shoes_app/view_model/products_view_model.dart';
 import 'package:nike_shoes_app/view_model/user_view_model.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -29,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
       future: userModel.getUserData(),
       builder: (context, AsyncSnapshot<Map<String, dynamic>?> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Text('loading...');
+          return const Text('Loading...');
         }
         if (!snapshot.hasData || snapshot.data == null) {
           return const Text('User');
@@ -43,6 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final ProductsViewModel productsVm = ProductsViewModel();
     return Scaffold(
       backgroundColor: AppColors.background,
       drawer: Drawer(
@@ -175,7 +179,127 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(height: 24),
 
             //Fetch all products from firebase
-            const ProductsListCard(),
+            StreamBuilder<List<Product>>(
+              stream: productsVm.getProducts(),
+              builder: (context, AsyncSnapshot<List<Product>> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(color: AppColors.primary),
+                  );
+                }
+                if (!snapshot.hasData) {
+                  return const Center(
+                    child: Text(
+                      'No products curretly available',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w400,
+                        color: AppColors.textPrimary,
+                      ),
+                    ),
+                  );
+                }
+                return Expanded(
+                  child: GridView.builder(
+                    itemCount: snapshot.data!.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisSpacing: 12,
+                      mainAxisSpacing: 24,
+                      childAspectRatio: 0.70,
+                      crossAxisCount: 2,
+                    ),
+                    itemBuilder: (context, int index) {
+                      final Product product = snapshot.data![index];
+
+                      return GestureDetector(
+                        onTap: () => Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => ProductPage(product: product),
+                          ),
+                        ),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: AppColors.white,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Image.asset(
+                                height: 170,
+                                productImages[index],
+                                fit: BoxFit.cover,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 16.0,
+                                ),
+                                child: Text(
+                                  product.category,
+                                  style: TextStyle(
+                                    color: AppColors.primary,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 16.0,
+                                ),
+                                child: Text(
+                                  product.name,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 16.0,
+                                    ),
+                                    child: Text(
+                                      product.price.toString(),
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 40,
+                                    width: 40,
+                                    decoration: BoxDecoration(
+                                      color: Colors.black,
+                                      borderRadius: BorderRadius.only(
+                                        bottomRight: Radius.circular(20),
+                                        topLeft: Radius.circular(10),
+                                      ),
+                                    ),
+                                    child: Icon(
+                                      Icons.add,
+                                      color: AppColors.white,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ),

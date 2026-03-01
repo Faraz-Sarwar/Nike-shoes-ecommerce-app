@@ -43,4 +43,14 @@ class ProductsViewModel extends ChangeNotifier {
     final Set<String> categories = await productRepo.getAllCategories();
     return categories;
   }
+
+  Future<void> editProductsInfo(
+    String id,
+    String category,
+    String title,
+    double price,
+  ) async {
+    await productRepo.editProductsInfo(id, category, title, price);
+    notifyListeners();
+  }
 }
