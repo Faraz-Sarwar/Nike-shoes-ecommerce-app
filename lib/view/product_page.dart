@@ -1,7 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nike_shoes_app/data/sizes.dart';
 import 'package:nike_shoes_app/model/product.dart';
 import 'package:nike_shoes_app/utilities/app_colors.dart';
+import 'package:nike_shoes_app/view/cart_screen.dart';
+import 'package:nike_shoes_app/view_model/cart_logic.dart';
+import 'package:provider/provider.dart';
 
 class ProductPage extends StatefulWidget {
   final Product product;
@@ -16,6 +20,7 @@ int selectedSize = 0;
 class _ProductPageState extends State<ProductPage> {
   @override
   Widget build(BuildContext context) {
+    final CartProvider cartProvider = context.read<CartProvider>();
     return Scaffold(
       backgroundColor: AppColors.white,
       appBar: AppBar(
@@ -23,6 +28,30 @@ class _ProductPageState extends State<ProductPage> {
         surfaceTintColor: AppColors.white,
         title: Text('${widget.product.category} shoes'),
         centerTitle: true,
+        actions: [
+          Stack(
+            children: [
+              Padding(
+                padding: EdgeInsets.only(right: 12),
+                child: GestureDetector(
+                  onTap: () => Navigator.push(
+                    context,
+                    CupertinoPageRoute(builder: (_) => const CartScreen()),
+                  ),
+                  child: Icon(CupertinoIcons.bag),
+                ),
+              ),
+              Positioned(
+                bottom: 9, // move slightly up
+                right: 8, // move to right side of icon
+                child: Consumer(
+                  builder: (context, CartProvider value, child) =>
+                      Text(value.noOfItemsInCart.toString()),
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
       body: Column(
         children: [
@@ -175,7 +204,9 @@ class _ProductPageState extends State<ProductPage> {
                                 borderRadius: BorderRadius.circular(40),
                               ),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              cartProvider.addItemInCart(widget.product);
+                            },
                             child: const Text('Add to bag'),
                           ),
                         ],

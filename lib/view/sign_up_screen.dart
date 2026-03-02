@@ -332,7 +332,7 @@ class _HomeScreenState extends State<SignupScreen> {
                           onTap: () => Navigator.pushReplacement(
                             context,
                             CupertinoPageRoute(
-                              builder: (context) => LoginScreen(),
+                              builder: (context) => const LoginScreen(),
                             ),
                           ),
                           child: const Text(

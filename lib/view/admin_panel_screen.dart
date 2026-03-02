@@ -30,10 +30,10 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
             onPressed: () {
               Navigator.push(
                 context,
-                CupertinoPageRoute(builder: (_) => AddProduct()),
+                CupertinoPageRoute(builder: (_) => const AddProduct()),
               );
             },
-            icon: Icon(Icons.add, size: 34),
+            icon: const Icon(Icons.add, size: 34),
           ),
         ],
       ),
@@ -201,7 +201,9 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
                                                           Navigator.pop(
                                                             context,
                                                           ),
-                                                      child: Text('Cancel'),
+                                                      child: const Text(
+                                                        'Cancel',
+                                                      ),
                                                     ),
                                                     SizedBox(width: 10),
                                                     ElevatedButton(
@@ -220,7 +222,7 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
                                                             );
                                                         Navigator.pop(context);
                                                       },
-                                                      child: Text('Save'),
+                                                      child: const Text('Save'),
                                                     ),
                                                   ],
                                                 ),
