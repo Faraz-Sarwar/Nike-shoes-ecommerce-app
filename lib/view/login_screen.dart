@@ -65,7 +65,7 @@ class _HomeScreenState extends State<LoginScreen> {
                             CustomInputField(
                               controller: _emailController,
                               hintText: 'Email',
-                              prefixIcon: Icon(
+                              prefixIcon: const Icon(
                                 Icons.email_outlined,
                                 color: AppColors.primary,
                               ),
@@ -84,7 +84,7 @@ class _HomeScreenState extends State<LoginScreen> {
                               obscureText: isObscure,
                               controller: _passwordController,
                               decoration: InputDecoration(
-                                prefixIcon: Icon(
+                                prefixIcon: const Icon(
                                   Icons.lock,
                                   color: AppColors.primary,
                                 ),
@@ -95,11 +95,11 @@ class _HomeScreenState extends State<LoginScreen> {
                                     });
                                   },
                                   icon: isObscure
-                                      ? Icon(
+                                      ? const Icon(
                                           Icons.visibility_off,
                                           color: AppColors.primary,
                                         )
-                                      : Icon(
+                                      : const Icon(
                                           Icons.visibility,
                                           color: AppColors.primary,
                                         ),
@@ -166,7 +166,7 @@ class _HomeScreenState extends State<LoginScreen> {
                                             context,
                                             CupertinoPageRoute(
                                               builder: (context) =>
-                                                  HomeScreen(),
+                                                  const HomeScreen(),
                                             ),
                                           );
                                         },
@@ -258,7 +258,7 @@ class _HomeScreenState extends State<LoginScreen> {
                           onTap: () => Navigator.pushReplacement(
                             context,
                             CupertinoPageRoute(
-                              builder: (context) => SignupScreen(),
+                              builder: (context) => const SignupScreen(),
                             ),
                           ),
                           child: const Text(

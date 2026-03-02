@@ -232,7 +232,10 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
                                         );
                                       },
                                     ),
-                                    child: Icon(Icons.edit_outlined, size: 22),
+                                    child: const Icon(
+                                      Icons.edit_outlined,
+                                      size: 22,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -276,7 +279,7 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
                                       topLeft: Radius.circular(10),
                                     ),
                                   ),
-                                  child: Icon(
+                                  child: const Icon(
                                     Icons.add,
                                     color: AppColors.white,
                                   ),

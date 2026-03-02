@@ -36,17 +36,22 @@ class _ProductPageState extends State<ProductPage> {
                 child: GestureDetector(
                   onTap: () => Navigator.push(
                     context,
-                    CupertinoPageRoute(builder: (_) => const CartScreen()),
+                    CupertinoPageRoute(builder: (_) => CartScreen()),
                   ),
-                  child: Icon(CupertinoIcons.bag),
+                  child: const Icon(CupertinoIcons.bag),
                 ),
               ),
               Positioned(
-                bottom: 9, // move slightly up
-                right: 8, // move to right side of icon
+                bottom: 8.5, // move slightly up
+                right: 6, // move to right side of icon
                 child: Consumer(
-                  builder: (context, CartProvider value, child) =>
-                      Text(value.noOfItemsInCart.toString()),
+                  builder: (context, CartProvider value, child) => Text(
+                    value.noOfItemsInCart.toString(),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.primary,
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -88,7 +93,7 @@ class _ProductPageState extends State<ProductPage> {
                         ),
                         Row(
                           children: [
-                            Icon(Icons.star, color: Colors.amberAccent),
+                            const Icon(Icons.star, color: Colors.amberAccent),
                             const SizedBox(width: 6),
                             Text(
                               widget.product.ratings.toString(),

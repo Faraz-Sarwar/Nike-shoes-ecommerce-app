@@ -75,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
               onTap: () {},
             ),
             ListTile(
-              leading: Icon(Icons.logout),
+              leading: const Icon(Icons.logout),
               title: const Text('Logout'),
               onTap: () async {
                 await authRepo.logout();
@@ -93,7 +93,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 if (admin) {
                   Navigator.push(
                     context,
-                    CupertinoPageRoute(builder: (_) => AdminPanelScreen()),
+                    CupertinoPageRoute(
+                      builder: (_) => const AdminPanelScreen(),
+                    ),
                   );
                 } else {
                   Utilis.showMessage('Access Denied', Colors.red);
@@ -107,7 +109,10 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: AppColors.background,
         surfaceTintColor: AppColors.background,
         actions: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.search, size: 28)),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.search, size: 28),
+          ),
         ],
       ),
       body: Padding(
@@ -284,7 +289,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         topLeft: Radius.circular(10),
                                       ),
                                     ),
-                                    child: Icon(
+                                    child: const Icon(
                                       Icons.add,
                                       color: AppColors.white,
                                     ),

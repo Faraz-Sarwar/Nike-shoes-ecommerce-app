@@ -69,7 +69,7 @@ class _HomeScreenState extends State<SignupScreen> {
                             CustomInputField(
                               controller: _nameController,
                               hintText: 'Name',
-                              prefixIcon: Icon(
+                              prefixIcon: const Icon(
                                 Icons.person,
                                 color: AppColors.primary,
                               ),
@@ -85,7 +85,7 @@ class _HomeScreenState extends State<SignupScreen> {
                             CustomInputField(
                               controller: _emailController,
                               hintText: 'Email',
-                              prefixIcon: Icon(
+                              prefixIcon: const Icon(
                                 Icons.email_outlined,
                                 color: AppColors.primary,
                               ),
@@ -106,7 +106,7 @@ class _HomeScreenState extends State<SignupScreen> {
                               obscureText: isObscure,
                               controller: _passwordController,
                               decoration: InputDecoration(
-                                prefixIcon: Icon(
+                                prefixIcon: const Icon(
                                   Icons.lock,
                                   color: AppColors.primary,
                                 ),
@@ -117,11 +117,11 @@ class _HomeScreenState extends State<SignupScreen> {
                                     });
                                   },
                                   icon: isObscure
-                                      ? Icon(
+                                      ? const Icon(
                                           Icons.visibility_off,
                                           color: AppColors.primary,
                                         )
-                                      : Icon(
+                                      : const Icon(
                                           Icons.visibility,
                                           color: AppColors.primary,
                                         ),
@@ -155,7 +155,7 @@ class _HomeScreenState extends State<SignupScreen> {
                               obscureText: confirmPassObscure,
                               controller: _confirmPasswordController,
                               decoration: InputDecoration(
-                                prefixIcon: Icon(
+                                prefixIcon: const Icon(
                                   Icons.lock,
                                   color: AppColors.primary,
                                 ),
@@ -166,11 +166,11 @@ class _HomeScreenState extends State<SignupScreen> {
                                     });
                                   },
                                   icon: isObscure
-                                      ? Icon(
+                                      ? const Icon(
                                           Icons.visibility_off,
                                           color: AppColors.primary,
                                         )
-                                      : Icon(
+                                      : const Icon(
                                           Icons.visibility,
                                           color: AppColors.primary,
                                         ),
