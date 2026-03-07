@@ -7,10 +7,13 @@ import 'package:nike_shoes_app/repository/user_data.dart';
 import 'package:nike_shoes_app/utilities/app_colors.dart';
 import 'package:nike_shoes_app/utilities/utilis.dart';
 import 'package:nike_shoes_app/view/admin_panel_screen.dart';
+import 'package:nike_shoes_app/view/cart_screen.dart';
 import 'package:nike_shoes_app/view/product_page.dart';
 import 'package:nike_shoes_app/view_model/auth_view_model.dart';
+import 'package:nike_shoes_app/view_model/cart_logic.dart';
 import 'package:nike_shoes_app/view_model/products_view_model.dart';
 import 'package:nike_shoes_app/view_model/user_view_model.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -25,6 +28,8 @@ class _HomeScreenState extends State<HomeScreen> {
   final UserViewModel userModel = UserViewModel();
 
   int categorySelectedIndex = 0;
+  final searchController = TextEditingController();
+  bool isSearching = false;
 
   //resuable function to extract user data
   Widget getUserData(String userData) {
@@ -46,7 +51,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final ProductsViewModel productsVm = ProductsViewModel();
+    final productsVm = context.watch<ProductsViewModel>();
+    final cartProvider = context.read<CartProvider>();
     return Scaffold(
       backgroundColor: AppColors.background,
       drawer: Drawer(
@@ -63,16 +69,26 @@ class _HomeScreenState extends State<HomeScreen> {
               decoration: BoxDecoration(color: AppColors.primary),
             ),
             ListTile(
-              leading: const Icon(Icons.home),
+              leading: const Icon(CupertinoIcons.home),
               title: const Text('Home'),
               onTap: () {
                 Navigator.pop(context);
               },
             ),
             ListTile(
-              leading: const Icon(Icons.shopping_bag),
+              leading: const Icon(CupertinoIcons.bag),
               title: const Text('Orders'),
               onTap: () {},
+            ),
+            ListTile(
+              leading: const Icon(CupertinoIcons.shopping_cart),
+              title: const Text('Cart'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  CupertinoPageRoute(builder: (context) => CartScreen()),
+                );
+              },
             ),
             ListTile(
               leading: const Icon(Icons.logout),
@@ -83,7 +99,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Divider(),
 
-            //This will take the admin to the admin panel to add, edit, delete products in the firebase firestore database
+            //This will take the admin to the admin panel to add, edit,
+            // delete products in the firebase firestore database
             ListTile(
               leading: const Icon(Icons.manage_accounts),
               title: const Text('Go  to admin panel'),
@@ -108,10 +125,30 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         backgroundColor: AppColors.background,
         surfaceTintColor: AppColors.background,
+        title: !isSearching
+            ? const Text('Home')
+            : TextField(
+                controller: searchController,
+                autofocus: true,
+                decoration: const InputDecoration(
+                  hintText: 'Search products...',
+                  border: InputBorder.none,
+                ),
+                onChanged: (value) {
+                  setState(() {});
+                },
+              ),
         actions: [
           IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.search, size: 28),
+            icon: Icon(isSearching ? Icons.close : Icons.search, size: 28),
+            onPressed: () {
+              setState(() {
+                if (isSearching) {
+                  searchController.clear();
+                }
+                isSearching = !isSearching;
+              });
+            },
           ),
         ],
       ),
@@ -170,18 +207,18 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 32),
+            const SizedBox(height: 24),
             SizedBox(
               height: 60,
               //search products by category section
               child: const CategoryList(),
             ),
-            const SizedBox(height: 32),
+            const SizedBox(height: 24),
             const Text(
               "New Men's",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 16),
 
             //Fetch all products from firebase
             StreamBuilder<List<Product>>(
@@ -204,9 +241,22 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   );
                 }
+                final allProducts = snapshot.data;
+                final filteredProducts = allProducts!
+                    .where(
+                      (p) => p.name.toLowerCase().contains(
+                        searchController.text.toLowerCase(),
+                      ),
+                    )
+                    .toList();
+
+                final displayProducts = searchController.text.isEmpty
+                    ? allProducts
+                    : filteredProducts;
+
                 return Expanded(
                   child: GridView.builder(
-                    itemCount: snapshot.data!.length,
+                    itemCount: displayProducts.length,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisSpacing: 12,
                       mainAxisSpacing: 24,
@@ -214,7 +264,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       crossAxisCount: 2,
                     ),
                     itemBuilder: (context, int index) {
-                      final Product product = snapshot.data![index];
+                      final Product product = displayProducts[index];
 
                       return GestureDetector(
                         onTap: () => Navigator.push(
@@ -289,9 +339,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                         topLeft: Radius.circular(10),
                                       ),
                                     ),
-                                    child: const Icon(
-                                      Icons.add,
-                                      color: AppColors.white,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        cartProvider.addItemInCart(product);
+                                        Utilis.showMessage(
+                                          'Item added in cart',
+                                          Colors.green,
+                                        );
+                                      },
+                                      child: const Icon(
+                                        Icons.add,
+                                        color: AppColors.white,
+                                      ),
                                     ),
                                   ),
                                 ],

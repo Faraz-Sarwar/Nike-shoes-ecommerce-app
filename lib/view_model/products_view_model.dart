@@ -53,4 +53,13 @@ class ProductsViewModel extends ChangeNotifier {
     await productRepo.editProductsInfo(id, category, title, price);
     notifyListeners();
   }
+
+  Future<void> deleteProduct(Product product) async {
+    try {
+      await productRepo.deleteProduct(product);
+      notifyListeners();
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
 }

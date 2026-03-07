@@ -26,10 +26,10 @@ class AuthViewModel extends ChangeNotifier {
       _isLoading = false;
       notifyListeners();
       return uCredentials;
-    } on AuthExceptions catch (e) {
+    } on AuthExceptions {
       rethrow;
     } finally {
-      isLoading = false;
+      _isLoading = false;
       notifyListeners();
     }
   }
@@ -46,10 +46,10 @@ class AuthViewModel extends ChangeNotifier {
       _isLoading = false;
       notifyListeners();
       return user;
-    } on AuthExceptions catch (e) {
+    } on AuthExceptions {
       rethrow;
     } finally {
-      isLoading = false;
+      _isLoading = false;
       notifyListeners();
     }
   }
@@ -57,5 +57,17 @@ class AuthViewModel extends ChangeNotifier {
   Future<void> logout() async {
     await authRepo.logoutUser();
     notifyListeners();
+  }
+
+  Future<UserCredential?> googleSignUp() async {
+    try {
+      _isLoading = true;
+      notifyListeners();
+      await authRepo.signUpWithGoogle();
+      _isLoading = false;
+      notifyListeners();
+    } catch (e) {
+      throw Exception(e.toString());
+    }
   }
 }

@@ -49,4 +49,8 @@ class ProductsRepository {
       'price': priceInfo,
     });
   }
+
+  Future<void> deleteProduct(Product product) async {
+    await productCollection.doc(product.id).delete();
+  }
 }

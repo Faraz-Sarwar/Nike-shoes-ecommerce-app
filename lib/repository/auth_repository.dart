@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:nike_shoes_app/repository/Exceptions/auth_exceptions.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthRepository {
   final auth = FirebaseAuth.instance;
+  final GoogleSignIn googleSignIn = GoogleSignIn.instance;
   final CollectionReference users = FirebaseFirestore.instance.collection(
     'users',
   );
@@ -71,5 +73,23 @@ class AuthRepository {
 
   Future<void> logoutUser() async {
     await auth.signOut();
+  }
+
+  Future<UserCredential?> signUpWithGoogle() async {
+    try {
+      //initialize
+      await googleSignIn.initialize();
+
+      //authenticate google user
+      final googleUser = await googleSignIn.authenticate();
+
+      final GoogleSignInAuthentication googleAuth = googleUser.authentication;
+      final credentials = GoogleAuthProvider.credential(
+        idToken: googleAuth.idToken,
+      );
+      return auth.signInWithCredential(credentials);
+    } catch (e) {
+      throw Exception(e.toString());
+    }
   }
 }

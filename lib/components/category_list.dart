@@ -42,6 +42,7 @@ class _CategoryListState extends State<CategoryList> {
               onTap: () {
                 setState(() {
                   categorySelectedIndex = index;
+                  
                 });
               },
               child: Container(

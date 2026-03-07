@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nike_shoes_app/data/product_images.dart';
-import 'package:nike_shoes_app/model/product.dart';
 import 'package:nike_shoes_app/utilities/app_colors.dart';
 import 'package:nike_shoes_app/view_model/cart_logic.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +11,7 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cartProvider = context.watch<CartProvider>();
+    double subTotal = cartProvider.getTotalPrice();
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -86,7 +86,15 @@ class CartScreen extends StatelessWidget {
                                         ),
                                       ),
                                     ),
-                                    const Icon(CupertinoIcons.delete, size: 22),
+                                    GestureDetector(
+                                      onTap: () => cartProvider
+                                          .removeItemFromCart(product),
+                                      child: const Icon(
+                                        CupertinoIcons.delete,
+                                        color: AppColors.primary,
+                                        size: 22,
+                                      ),
+                                    ),
                                   ],
                                 ),
 
@@ -144,24 +152,27 @@ class CartScreen extends StatelessWidget {
 
       floatingActionButton: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12),
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            minimumSize: Size(double.infinity, 50),
-          ),
-          onPressed: () {},
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                cartProvider.getTotalPrice().toString(),
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+        child: Visibility(
+          visible: subTotal > 0 ? true : false,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              minimumSize: Size(double.infinity, 50),
+            ),
+            onPressed: () {},
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  subTotal.toStringAsFixed(2),
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              const SizedBox(width: 12),
-              const Text('Go to checkout', style: TextStyle(fontSize: 18)),
-            ],
+                const SizedBox(width: 12),
+                const Text('Go to checkout', style: TextStyle(fontSize: 18)),
+              ],
+            ),
           ),
         ),
       ),

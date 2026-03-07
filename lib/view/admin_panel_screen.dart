@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:nike_shoes_app/components/products_list_card.dart';
 import 'package:nike_shoes_app/data/product_images.dart';
 import 'package:nike_shoes_app/model/product.dart';
 import 'package:nike_shoes_app/utilities/app_colors.dart';
+import 'package:nike_shoes_app/utilities/utilis.dart';
 import 'package:nike_shoes_app/view/add_product.dart';
 import 'package:nike_shoes_app/view_model/products_view_model.dart';
 
@@ -43,7 +43,7 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              'Current available products',
+              'Manage products inventory',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
             ),
             const SizedBox(height: 32),
@@ -254,37 +254,72 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
                               ),
                             ),
                             const SizedBox(height: 8),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 16.0,
-                                  ),
-                                  child: Text(
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16.0,
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
                                     product.price.toString(),
                                     style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                ),
-                                Container(
-                                  height: 40,
-                                  width: 40,
-                                  decoration: BoxDecoration(
-                                    color: Colors.black,
-                                    borderRadius: BorderRadius.only(
-                                      bottomRight: Radius.circular(20),
-                                      topLeft: Radius.circular(10),
+                                  GestureDetector(
+                                    onTap: () => showDialog(
+                                      context: context,
+                                      builder: (context) => AlertDialog(
+                                        backgroundColor: AppColors.background,
+                                        title: Text(
+                                          'Are you sure you want to delete ${product.name} ?',
+                                          style: TextStyle(fontSize: 15),
+                                        ),
+                                        actions: [
+                                          ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor: AppColors.white,
+                                              foregroundColor: AppColors.white,
+                                            ),
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: const Text(
+                                              'Cancel',
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                          ),
+                                          ElevatedButton(
+                                            onPressed: () async {
+                                              try {
+                                                await productsVm.deleteProduct(
+                                                  product,
+                                                );
+                                              } catch (e) {
+                                                Utilis.showMessage(
+                                                  e.toString(),
+                                                  Colors.red,
+                                                );
+                                              }
+                                              Navigator.pop(context);
+                                            },
+                                            child: const Text('Delete'),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    child: const Icon(
+                                      Icons.delete,
+                                      color: Colors.black,
                                     ),
                                   ),
-                                  child: const Icon(
-                                    Icons.add,
-                                    color: AppColors.white,
-                                  ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ],
                         ),
