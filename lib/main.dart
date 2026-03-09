@@ -64,6 +64,8 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
+        // NOTE for myself:
+        // flow always will be Main.dart -> authWrapper -> selected buttom navigation
         home: const AuthWrapper(),
       ),
     );

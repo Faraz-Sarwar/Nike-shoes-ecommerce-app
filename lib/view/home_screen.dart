@@ -341,11 +341,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                     child: GestureDetector(
                                       onTap: () {
-                                        cartProvider.addItemInCart(product);
-                                        Utilis.showMessage(
-                                          'Item added in cart',
-                                          Colors.green,
-                                        );
+                                        if (cartProvider.isAlreadyInCart(
+                                          product,
+                                        )) {
+                                          Utilis.showMessage(
+                                            "Item already in cart",
+                                            Colors.green,
+                                          );
+                                        } else {
+                                          cartProvider.addItemInCart(product);
+                                          Utilis.showMessage(
+                                            'Item added in cart',
+                                            Colors.green,
+                                          );
+                                        }
                                       },
                                       child: const Icon(
                                         Icons.add,

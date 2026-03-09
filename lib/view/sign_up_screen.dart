@@ -311,8 +311,25 @@ class _HomeScreenState extends State<SignupScreen> {
                         ),
                         minimumSize: const Size(double.infinity, 46),
                       ),
-                      onPressed: () {
+                      onPressed: () async {
                         // Google Sign In logic here
+                        try {
+                          final credentials = await authProvider.googleSignUp();
+                          if (credentials?.user != null) {
+                            Utilis.showMessage(
+                              "Google signed in success",
+                              Colors.green,
+                            );
+                            print(credentials);
+                            Navigator.push(
+                              context,
+                              CupertinoPageRoute(builder: (_) => HomeScreen()),
+                            );
+                          }
+                        } catch (e) {
+                          print(e.toString());
+                          Utilis.showMessage(e.toString(), Colors.red);
+                        }
                       },
                       label: const Text("Sign up with Google"),
 

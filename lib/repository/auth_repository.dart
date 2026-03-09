@@ -5,7 +5,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthRepository {
   final auth = FirebaseAuth.instance;
-  final GoogleSignIn googleSignIn = GoogleSignIn.instance;
+  final GoogleSignIn googleSignIn = GoogleSignIn.standard();
   final CollectionReference users = FirebaseFirestore.instance.collection(
     'users',
   );
@@ -75,19 +75,24 @@ class AuthRepository {
     await auth.signOut();
   }
 
-  Future<UserCredential?> signUpWithGoogle() async {
+  Future<UserCredential?> googleSignUp() async {
     try {
-      //initialize
-      await googleSignIn.initialize();
+      //Pick a Google account
+      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+      if (googleUser == null) return null;
 
-      //authenticate google user
-      final googleUser = await googleSignIn.authenticate();
+      //Get Google auth tokens
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
 
-      final GoogleSignInAuthentication googleAuth = googleUser.authentication;
-      final credentials = GoogleAuthProvider.credential(
+      //Create Firebase credential
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
-      return auth.signInWithCredential(credentials);
+
+      // Sign in to Firebase
+      return await auth.signInWithCredential(credential);
     } catch (e) {
       throw Exception(e.toString());
     }

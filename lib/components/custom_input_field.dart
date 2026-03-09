@@ -4,7 +4,7 @@ import 'package:nike_shoes_app/utilities/app_colors.dart';
 class CustomInputField extends StatelessWidget {
   final String hintText;
   final TextEditingController controller;
-  final Widget prefixIcon;
+  final Widget? prefixIcon;
   final Widget? suffixIcon;
   final TextInputType? inputKeyboardType;
   final String? Function(String?)? validator;
@@ -13,7 +13,7 @@ class CustomInputField extends StatelessWidget {
     super.key,
     required this.controller,
     required this.hintText,
-    required this.prefixIcon,
+    this.prefixIcon,
     this.suffixIcon,
     this.inputKeyboardType,
     this.validator,

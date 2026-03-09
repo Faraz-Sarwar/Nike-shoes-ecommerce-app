@@ -61,11 +61,8 @@ class AuthViewModel extends ChangeNotifier {
 
   Future<UserCredential?> googleSignUp() async {
     try {
-      _isLoading = true;
-      notifyListeners();
-      await authRepo.signUpWithGoogle();
-      _isLoading = false;
-      notifyListeners();
+      final credentials = await authRepo.googleSignUp();
+      return credentials;
     } catch (e) {
       throw Exception(e.toString());
     }

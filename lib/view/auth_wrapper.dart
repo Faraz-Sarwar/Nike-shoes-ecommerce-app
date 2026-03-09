@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:nike_shoes_app/view/bottom_navigation.dart';
 import 'package:nike_shoes_app/view/home_screen.dart';
 import 'package:nike_shoes_app/view/login_screen.dart';
 
@@ -15,7 +16,9 @@ class AuthWrapper extends StatelessWidget {
           return const Center(child: CircularProgressIndicator());
         }
         if (snapshot.hasData) {
-          return const HomeScreen();
+          // NOTE for myself:
+          //  flow always will be Main.dart -> authWrapper -> selected buttom navigation
+          return const BottomNavigation();
         }
         return const LoginScreen();
       },
