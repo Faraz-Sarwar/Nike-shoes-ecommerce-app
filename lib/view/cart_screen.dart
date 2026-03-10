@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nike_shoes_app/data/product_images.dart';
 import 'package:nike_shoes_app/utilities/app_colors.dart';
+import 'package:nike_shoes_app/view/checkout_page.dart';
 import 'package:nike_shoes_app/view_model/cart_logic.dart';
 import 'package:provider/provider.dart';
 
@@ -10,7 +11,7 @@ class CartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cartProvider = context.watch<CartProvider>();
+    final CartProvider cartProvider = context.watch<CartProvider>();
     double subTotal = cartProvider.getTotalPrice();
 
     return Scaffold(
@@ -158,7 +159,12 @@ class CartScreen extends StatelessWidget {
             style: ElevatedButton.styleFrom(
               minimumSize: Size(double.infinity, 50),
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                CupertinoPageRoute(builder: (_) => const CheckoutPage()),
+              );
+            },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

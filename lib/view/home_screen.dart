@@ -7,6 +7,7 @@ import 'package:nike_shoes_app/repository/user_data.dart';
 import 'package:nike_shoes_app/utilities/app_colors.dart';
 import 'package:nike_shoes_app/utilities/utilis.dart';
 import 'package:nike_shoes_app/view/admin_panel_screen.dart';
+import 'package:nike_shoes_app/view/all_products.dart';
 import 'package:nike_shoes_app/view/cart_screen.dart';
 import 'package:nike_shoes_app/view/product_page.dart';
 import 'package:nike_shoes_app/view_model/auth_view_model.dart';
@@ -34,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
   //resuable function to extract user data
   Widget getUserData(String userData) {
     return FutureBuilder(
-      future: userModel.getUserData(),
+      future: userModel.getUserData(), //fetch data from view model
       builder: (context, AsyncSnapshot<Map<String, dynamic>?> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Text('Loading...');
@@ -86,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
               onTap: () {
                 Navigator.push(
                   context,
-                  CupertinoPageRoute(builder: (context) => CartScreen()),
+                  CupertinoPageRoute(builder: (context) => const CartScreen()),
                 );
               },
             ),
@@ -214,9 +215,23 @@ class _HomeScreenState extends State<HomeScreen> {
               child: const CategoryList(),
             ),
             const SizedBox(height: 24),
-            const Text(
-              "New Men's",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  "New Men's",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      CupertinoPageRoute(builder: (_) => AllProducts()),
+                    );
+                  },
+                  child: const Text('View all'),
+                ),
+              ],
             ),
             const SizedBox(height: 16),
 

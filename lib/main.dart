@@ -1,5 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:nike_shoes_app/utilities/app_colors.dart';
 import 'package:nike_shoes_app/view/auth_wrapper.dart';
 import 'package:nike_shoes_app/view_model/auth_view_model.dart';
@@ -9,6 +11,10 @@ import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await Hive.initFlutter();
+  // Hive.registerAdapter(ProductAdapter());
+
   await Firebase.initializeApp();
   runApp(const MyApp());
 }
