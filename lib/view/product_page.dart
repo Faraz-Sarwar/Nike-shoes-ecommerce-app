@@ -4,7 +4,7 @@ import 'package:nike_shoes_app/data/sizes.dart';
 import 'package:nike_shoes_app/model/product.dart';
 import 'package:nike_shoes_app/utilities/app_colors.dart';
 import 'package:nike_shoes_app/view/cart_screen.dart';
-import 'package:nike_shoes_app/view_model/cart_logic.dart';
+import 'package:nike_shoes_app/view_model/cart_view_model.dart';
 import 'package:provider/provider.dart';
 
 class ProductPage extends StatefulWidget {

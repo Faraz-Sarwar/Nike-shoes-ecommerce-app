@@ -11,7 +11,7 @@ import 'package:nike_shoes_app/view/all_products.dart';
 import 'package:nike_shoes_app/view/cart_screen.dart';
 import 'package:nike_shoes_app/view/product_page.dart';
 import 'package:nike_shoes_app/view_model/auth_view_model.dart';
-import 'package:nike_shoes_app/view_model/cart_logic.dart';
+import 'package:nike_shoes_app/view_model/cart_view_model.dart';
 import 'package:nike_shoes_app/view_model/products_view_model.dart';
 import 'package:nike_shoes_app/view_model/user_view_model.dart';
 import 'package:provider/provider.dart';

@@ -5,7 +5,7 @@ import 'package:nike_shoes_app/model/product.dart';
 import 'package:nike_shoes_app/utilities/app_colors.dart';
 import 'package:nike_shoes_app/utilities/utilis.dart';
 import 'package:nike_shoes_app/view/product_page.dart';
-import 'package:nike_shoes_app/view_model/cart_logic.dart';
+import 'package:nike_shoes_app/view_model/cart_view_model.dart';
 import 'package:nike_shoes_app/view_model/products_view_model.dart';
 import 'package:provider/provider.dart';
 

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:nike_shoes_app/data/product_images.dart';
 import 'package:nike_shoes_app/utilities/app_colors.dart';
 import 'package:nike_shoes_app/view/checkout_page.dart';
-import 'package:nike_shoes_app/view_model/cart_logic.dart';
+import 'package:nike_shoes_app/view_model/cart_view_model.dart';
 import 'package:provider/provider.dart';
 
 class CartScreen extends StatelessWidget {

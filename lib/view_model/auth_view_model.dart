@@ -19,13 +19,13 @@ class AuthViewModel extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
     try {
-      final uCredentials = await authRepo.loginUserWithEmailAndPassword(
+      final credentials = await authRepo.loginUserWithEmailAndPassword(
         email,
         password,
       );
       _isLoading = false;
       notifyListeners();
-      return uCredentials;
+      return credentials;
     } on AuthExceptions {
       rethrow;
     } finally {

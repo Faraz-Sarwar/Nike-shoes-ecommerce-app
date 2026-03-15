@@ -5,7 +5,7 @@ import 'package:nike_shoes_app/view/all_products.dart';
 import 'package:nike_shoes_app/view/cart_screen.dart';
 import 'package:nike_shoes_app/view/home_screen.dart';
 import 'package:nike_shoes_app/view/profile_screen.dart';
-import 'package:nike_shoes_app/view_model/cart_logic.dart';
+import 'package:nike_shoes_app/view_model/cart_view_model.dart';
 import 'package:provider/provider.dart';
 
 class BottomNavigation extends StatefulWidget {
@@ -35,9 +35,9 @@ class _BottomNavigationState extends State<BottomNavigation> {
       body: pages[currentIndex],
 
       bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed, // ⭐ FIX
-        selectedItemColor: AppColors.primary, // ⭐ FIX
-        unselectedItemColor: Colors.grey, // ⭐ FIX
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: AppColors.primary,
+        unselectedItemColor: Colors.grey,
         iconSize: 28,
         showSelectedLabels: false,
         showUnselectedLabels: false,
