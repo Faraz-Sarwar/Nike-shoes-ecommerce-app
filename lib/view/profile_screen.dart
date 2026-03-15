@@ -44,15 +44,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 hintText: 'location',
               ),
               const SizedBox(height: 16),
-              CustomButton(
-                text: Center(
-                  child: const Text(
-                    'Save profile',
-                    style: TextStyle(color: AppColors.white, fontSize: 18),
-                  ),
-                ),
-                onClick: () {},
-              ),
+              CustomButton(text: Text('Save profile'), onClick: () {}),
             ],
           ),
         ),

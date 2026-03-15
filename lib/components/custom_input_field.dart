@@ -26,6 +26,7 @@ class CustomInputField extends StatelessWidget {
       keyboardType: inputKeyboardType,
       validator: validator,
       decoration: InputDecoration(
+        isDense: true,
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,
         hintText: hintText,

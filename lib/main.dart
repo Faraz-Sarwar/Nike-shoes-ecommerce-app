@@ -6,6 +6,7 @@ import 'package:nike_shoes_app/utilities/app_colors.dart';
 import 'package:nike_shoes_app/view/auth_wrapper.dart';
 import 'package:nike_shoes_app/view_model/auth_view_model.dart';
 import 'package:nike_shoes_app/view_model/cart_view_model.dart';
+import 'package:nike_shoes_app/view_model/order_view_model.dart';
 import 'package:nike_shoes_app/view_model/products_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AuthViewModel()),
         ChangeNotifierProvider(create: (_) => ProductsViewModel()),
         ChangeNotifierProvider(create: (_) => CartProvider()),
+        ChangeNotifierProvider(create: (_) => OrderViewModel()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
